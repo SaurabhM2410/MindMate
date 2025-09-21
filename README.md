@@ -1,4 +1,4 @@
-# MindMate - AI-Powered Mental Wellbeing Companion App
+# MindMate - AI-Powered Mental Wellbeing Companion
 
 ## 🌟 Complete Installation & Setup Guide
 
