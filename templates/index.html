@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate - Your Mental Wellbeing Companion</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-heart"></i>
+                    <span>MindMate</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#dashboard" class="nav-link active" data-tab="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="#chat" class="nav-link" data-tab="chat"><i class="fas fa-comments"></i> Chat</a></li>
+                    <li><a href="#mood" class="nav-link" data-tab="mood"><i class="fas fa-smile"></i> Mood</a></li>
+                    <li><a href="#journal" class="nav-link" data-tab="journal"><i class="fas fa-book"></i> Journal</a></li>
+                    <li><a href="#breathing" class="nav-link" data-tab="breathing"><i class="fas fa-wind"></i> Breathe</a></li>
+                    <li><a href="#resources" class="nav-link" data-tab="resources"><i class="fas fa-life-ring"></i> Help</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
+                <div class="tab-header">
+                    <h1>Your Wellbeing Dashboard</h1>
+                    <p>Track your mental health journey</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-pie"></i> Mood Overview</h3>
+                        </div>
+                        <div class="card-content">
+                            <canvas id="moodChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-week"></i> This Week</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="stat-item">
+                                <span class="stat-label">Average Mood</span>
+                                <span class="stat-value" id="avgMood">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Journal Entries</span>
+                                <span class="stat-value" id="journalCount">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Breathing Sessions</span>
+                                <span class="stat-value" id="breathingCount">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card quick-actions">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="card-content">
+                            <button class="quick-action-btn" data-tab="mood">
+                                <i class="fas fa-smile"></i>
+                                Log Mood
+                            </button>
+                            <button class="quick-action-btn" data-tab="chat">
+                                <i class="fas fa-comments"></i>
+                                Chat Now
+                            </button>
+                            <button class="quick-action-btn" data-tab="breathing">
+                                <i class="fas fa-wind"></i>
+                                Breathe
+                            </button>
+                            <button class="quick-action-btn" data-tab="journal">
+                                <i class="fas fa-pen"></i>
+                                Write
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Tab -->
+            <section id="chat" class="tab-content">
+                <div class="tab-header">
+                    <h1>Chat with MindMate</h1>
+                    <p>Your AI companion is here to listen and support you</p>
+                </div>
+                
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm MindMate, your mental wellbeing companion. I'm here to listen, support, and help you navigate your emotions. How are you feeling today?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div class="chat-input">
+                            <textarea id="messageInput" placeholder="Share what's on your mind..." rows="1"></textarea>
+                            <button id="sendMessage" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="chat-suggestions">
+                            <button class="suggestion-btn">I'm feeling stressed</button>
+                            <button class="suggestion-btn">I'm having a good day</button>
+                            <button class="suggestion-btn">I feel anxious</button>
+                            <button class="suggestion-btn">Help me relax</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mood Tab -->
+            <section id="mood" class="tab-content">
+                <div class="tab-header">
+                    <h1>How are you feeling?</h1>
+                    <p>Track your emotions to better understand your patterns</p>
+                </div>
+                
+                <div class="mood-tracker">
+                    <div class="mood-selector">
+                        <div class="mood-options">
+                            <button class="mood-btn" data-mood="happy" data-emoji="😊">
+                                <span class="mood-emoji">😊</span>
+                                <span class="mood-label">Happy</span>
+                            </button>
+                            <button class="mood-btn" data-mood="sad" data-emoji="😢">
+                                <span class="mood-emoji">😢</span>
+                                <span class="mood-label">Sad</span>
+                            </button>
+                            <button class="mood-btn" data-mood="anxious" data-emoji="😰">
+                                <span class="mood-emoji">😰</span>
+                                <span class="mood-label">Anxious</span>
+                            </button>
+                            <button class="mood-btn" data-mood="angry" data-emoji="😠">
+                                <span class="mood-emoji">😠</span>
+                                <span class="mood-label">Angry</span>
+                            </button>
+                            <button class="mood-btn" data-mood="tired" data-emoji="😴">
+                                <span class="mood-emoji">😴</span>
+                                <span class="mood-label">Tired</span>
+                            </button>
+                            <button class="mood-btn" data-mood="excited" data-emoji="🤩">
+                                <span class="mood-emoji">🤩</span>
+                                <span class="mood-label">Excited</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mood-details" id="moodDetails" style="display: none;">
+                        <div class="mood-intensity">
+                            <label>Intensity (1-10):</label>
+                            <input type="range" id="moodIntensity" min="1" max="10" value="5">
+                            <span id="intensityValue">5</span>
+                        </div>
+                        
+                        <div class="mood-notes">
+                            <label>Notes (optional):</label>
+                            <textarea id="moodNotes" placeholder="What's contributing to this feeling?"></textarea>
+                        </div>
+                        
+                        <div class="mood-actions">
+                            <button id="saveMood" class="primary-btn">Save Mood</button>
+                            <button id="cancelMood" class="secondary-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mood-history">
+                    <h3>Recent Moods</h3>
+                    <div id="recentMoods" class="mood-timeline">
+                        <!-- Mood history will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Journal Tab -->
+            <section id="journal" class="tab-content">
+                <div class="tab-header">
+                    <h1>Journal</h1>
+                    <p>Express your thoughts and feelings through writing</p>
+                </div>
+                
+                <div class="journal-container">
+                    <div class="journal-editor">
+                        <div class="journal-form">
+                            <input type="text" id="journalTitle" placeholder="Entry title (optional)" class="journal-title-input">
+                            <textarea id="journalContent" placeholder="What's on your mind today? Writing can help you process your thoughts and feelings..." class="journal-textarea"></textarea>
+                            
+                            <div class="journal-meta">
+                                <div class="journal-mood">
+                                    <label>Current mood:</label>
+                                    <select id="journalMood">
+                                        <option value="">Select mood</option>
+                                        <option value="happy">😊 Happy</option>
+                                        <option value="sad">😢 Sad</option>
+                                        <option value="anxious">😰 Anxious</option>
+                                        <option value="angry">😠 Angry</option>
+                                        <option value="tired">😴 Tired</option>
+                                        <option value="excited">🤩 Excited</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="journal-tags">
+                                    <input type="text" id="journalTags" placeholder="Tags (comma-separated)">
+                                </div>
+                            </div>
+                            
+                            <div class="journal-actions">
+                                <button id="saveJournal" class="primary-btn">
+                                    <i class="fas fa-save"></i> Save Entry
+                                </button>
+                                <button id="clearJournal" class="secondary-btn">
+                                    <i class="fas fa-eraser"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="journal-entries">
+                        <h3>Recent Entries</h3>
+                        <div id="journalList" class="journal-list">
+                            <!-- Journal entries will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Breathing Tab -->
+            <section id="breathing" class="tab-content">
+                <div class="tab-header">
+                    <h1>Breathing Exercise</h1>
+                    <p>Use the 4-7-8 technique to calm your mind and body</p>
+                </div>
+                
+                <div class="breathing-container">
+                    <div class="breathing-animation">
+                        <div class="breathing-circle" id="breathingCircle">
+                            <div class="breathing-text" id="breathingText">
+                                Click Start to Begin
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="breathing-controls">
+                        <div class="breathing-info">
+                            <div class="breathing-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Cycles Completed</span>
+                                    <span class="stat-value" id="completedCycles">0</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Session Time</span>
+                                    <span class="stat-value" id="sessionTime">0:00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breathing-buttons">
+                            <button id="startBreathing" class="primary-btn">
+                                <i class="fas fa-play"></i> Start Breathing
+                            </button>
+                            <button id="pauseBreathing" class="secondary-btn" style="display: none;">
+                                <i class="fas fa-pause"></i> Pause
+                            </button>
+                            <button id="stopBreathing" class="secondary-btn" style="display: none;">
+                                <i class="fas fa-stop"></i> Stop
+                            </button>
+                        </div>
+                        
+                        <div class="breathing-instructions">
+                            <h4>How it works:</h4>
+                            <ul>
+                                <li><strong>Inhale</strong> for 4 seconds</li>
+                                <li><strong>Hold</strong> for 7 seconds</li>
+                                <li><strong>Exhale</strong> for 8 seconds</li>
+                                <li>Repeat for several cycles</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resources Tab -->
+            <section id="resources" class="tab-content">
+                <div class="tab-header">
+                    <h1>Emergency Resources</h1>
+                    <p>Get immediate help when you need it most</p>
+                </div>
+                
+                <div class="resources-container">
+                    <div class="emergency-alert">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h3>In Crisis?</h3>
+                            <p>If you're having thoughts of self-harm or suicide, please reach out immediately.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-grid">
+                        <div class="resource-card emergency">
+                            <div class="resource-header">
+                                <i class="fas fa-phone"></i>
+                                <h3>Crisis Text Line</h3>
+                            </div>
+                            <div class="resource-content">
+                                <p class="resource-contact">Text HOME to 741741</p>
+                                <p>24/7 crisis support via text message</p>
+                                <a href="https://www.crisistextline.org/" target="_blank" class="resource-link">Visit Website</a>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-card emergency">
+                            <div class="resource-header">
+                                <i class="fas fa-life-ring"></i>
+                                <h3>Suicide Prevention Lifeline</h3>
+                            </div>
+                            <div class="resource-content">
+                                <p class="resource-contact">Call or text 988</p>
+                                <p>24/7 free and confidential support</p>
+                                <a href="https://suicidepreventionlifeline.org/" target="_blank" class="resource-link">Visit Website</a>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <i class="fas fa-hospital"></i>
+                                <h3>SAMHSA Helpline</h3>
+                            </div>
+                            <div class="resource-content">
+                                <p class="resource-contact">1-800-662-HELP (4357)</p>
+                                <p>Treatment referral and information service</p>
+                                <a href="https://www.samhsa.gov/find-help/national-helpline" target="_blank" class="resource-link">Visit Website</a>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <i class="fas fa-comments"></i>
+                                <h3>7 Cups</h3>
+                            </div>
+                            <div class="resource-content">
+                                <p class="resource-contact">Free online emotional support</p>
+                                <p>Connect with trained listeners</p>
+                                <a href="https://www.7cups.com/" target="_blank" class="resource-link">Visit Website</a>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <i class="fas fa-brain"></i>
+                                <h3>MindShift</h3>
+                            </div>
+                            <div class="resource-content">
+                                <p class="resource-contact">Anxiety management app</p>
+                                <p>Cognitive behavioral therapy tools</p>
+                                <a href="https://www.anxietycanada.com/resources/mindshift-app/" target="_blank" class="resource-link">Visit Website</a>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-header">
+                                <i class="fas fa-leaf"></i>
+                                <h3>Headspace</h3>
+                            </div>
+                            <div class="resource-content">
+                                <p class="resource-contact">Meditation and mindfulness</p>
+                                <p>Guided meditation sessions</p>
+                                <a href="https://www.headspace.com/" target="_blank" class="resource-link">Visit Website</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="emergency-notice">
+                        <p><strong>Emergency:</strong> If you're in immediate danger, call 911 or go to your nearest emergency room.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-heart"></i>
+        </div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="/static/script.js"></script>
+</body>
+</html>
